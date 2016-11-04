@@ -25,7 +25,7 @@ public class Program {
 
         Iterator<Command> i = commands.iterator();
         while(i.hasNext())
-            i.next().execute(state);
+            this.state = i.next().execute(state);
     }
 
     public static void main(String... args) {
