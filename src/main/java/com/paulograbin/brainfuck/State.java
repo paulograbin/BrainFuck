@@ -22,6 +22,7 @@ public class State {
 
     public State setCurrentValue(byte currentValue) {
         this.memory.setByteAt(counter, currentValue);
+        System.out.println("Setting value " + currentValue + " to position " + counter);
 
         return new State(memory, counter);
     }

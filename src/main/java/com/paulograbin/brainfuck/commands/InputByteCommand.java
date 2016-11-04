@@ -9,8 +9,11 @@ public class InputByteCommand implements Command {
     @Override
     public State execute(State programState) {
         Scanner s = new Scanner(System.in);
-        byte scannerByte = s.nextLine().getBytes()[0];
+        String input = s.nextLine();
 
-        return programState.setCurrentValue(scannerByte);
+        byte scannedByte = input.getBytes()[0];
+
+        System.out.println("Input " + input + " converted to " + scannedByte);
+        return programState.setCurrentValue(scannedByte);
     }
 }
