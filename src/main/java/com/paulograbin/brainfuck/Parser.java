@@ -21,6 +21,10 @@ public class Parser {
                 commands.add(new AddByteCommand());
             else if(c == '-')
                 commands.add(new DecrementByteCommand());
+            else if(c == '.')
+                commands.add(new OutputByteCommand());
+            else if(c == ',')
+                commands.add(new InputByteCommand());
             else
                 throw new InvalidParameterException("Invalid command");
         }

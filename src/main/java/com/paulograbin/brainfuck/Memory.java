@@ -1,9 +1,6 @@
 package com.paulograbin.brainfuck;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Memory {
 
     private byte[] mem;

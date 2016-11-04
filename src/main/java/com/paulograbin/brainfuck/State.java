@@ -1,8 +1,6 @@
 package com.paulograbin.brainfuck;
 
 
-import com.paulograbin.brainfuck.commands.Command;
-
 public class State {
 
     private int counter;
@@ -20,6 +18,12 @@ public class State {
 
     public Byte getCurrentValue() {
         return memory.getByteAt(counter);
+    }
+
+    public State setCurrentValue(byte currentValue) {
+        this.memory.setByteAt(counter, currentValue);
+
+        return new State(memory, counter);
     }
 
     public State incrementPointer() {
@@ -41,10 +45,11 @@ public class State {
     }
 
     public State incrementCurrentValue() {
-        byte newValue = (byte) (memory.getByteAt(counter) - 1);
+        byte newValue = (byte) (memory.getByteAt(counter) + 1);
 
         memory.setByteAt(counter, newValue);
-        System.out.printf("Decrementing value at %d to %d", counter, newValue);
+        System.out.printf("Incrementing value at %d to %d", counter, newValue);
+        System.out.println();
 
         return new State(memory, counter);
     }
@@ -54,7 +59,9 @@ public class State {
 
         memory.setByteAt(counter, newValue);
         System.out.printf("Decrementing value at %d to %d", counter, newValue);
+        System.out.println();
 
         return new State(memory, counter);
     }
+
 }

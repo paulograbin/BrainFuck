@@ -3,10 +3,12 @@ package com.paulograbin.brainfuck.commands;
 import com.paulograbin.brainfuck.State;
 
 
-public class AddByteCommand implements Command {
+public class OutputByteCommand implements Command {
 
     @Override
     public State execute(State programState) {
-        return programState.incrementCurrentValue();
+        System.out.println(programState.getCurrentValue());
+
+        return programState;
     }
 }

@@ -3,6 +3,8 @@ package com.paulograbin.brainfuck;
 import com.paulograbin.brainfuck.commands.Command;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class Program {
@@ -19,15 +21,15 @@ public class Program {
     }
 
     private void execute() {
-        ArrayList<Command> commands = new ArrayList(parser.parse(sourceCode));
+        List<Command> commands = new ArrayList(parser.parse(sourceCode));
 
-        for(Command c : commands) {
-            state = c.execute(state);
-        }
+        Iterator<Command> i = commands.iterator();
+        while(i.hasNext())
+            i.next().execute(state);
     }
 
     public static void main(String... args) {
-        String sourceCode = "+";
+        String sourceCode = ",";
 
         Program aSimpleProgram = new Program(sourceCode);
 
