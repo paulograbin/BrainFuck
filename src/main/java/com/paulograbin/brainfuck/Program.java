@@ -1,5 +1,6 @@
 package com.paulograbin.brainfuck;
 
+import com.paulograbin.brainfuck.commands.BranchEndCommand;
 import com.paulograbin.brainfuck.commands.Command;
 
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ public class Program {
     private State state;
     private Parser parser;
     private String sourceCode;
+    private int commandCounter;
+    private List<Command> commands;
 
     public Program(String sourceCode) {
         this.sourceCode = sourceCode;
@@ -21,20 +24,30 @@ public class Program {
     }
 
     private void execute() {
-        List<Command> commands = new ArrayList(parser.parse(sourceCode));
+        commands = parser.parse(sourceCode);
+        commandCounter = 0;
 
-        Iterator<Command> i = commands.iterator();
-        while(i.hasNext())
-            this.state = i.next().execute(state);
+        while(commandCounter < commands.size()) {
+            this.state = commands.get(commandCounter).execute(state);
+
+            commandCounter += 1;
+        }
+    }
+
+    private int fetchNextBranchEnd() {
+        for(int i = commandCounter; i < commands.size(); i++) {
+            if(commands.get(i).equals(new BranchEndCommand()))
+                return i;
+        }
+
+        return 0;
     }
 
     public static void main(String... args) {
-        String sourceCode = ",";
+        String sourceCode = "++++";
 
         Program aSimpleProgram = new Program(sourceCode);
 
         aSimpleProgram.execute();
     }
-
-
 }
