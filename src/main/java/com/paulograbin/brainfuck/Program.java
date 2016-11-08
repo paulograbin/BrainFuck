@@ -1,50 +1,89 @@
 package com.paulograbin.brainfuck;
 
-import com.paulograbin.brainfuck.commands.BranchEndCommand;
-import com.paulograbin.brainfuck.commands.Command;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Scanner;
 
 
 public class Program {
 
-    private State state;
-    private Parser parser;
+    public static final char RIGHT = '>';
+    public static final char LEFT = '<';
+    public static final char PLUS = '+';
+    public static final char MINUS = '-';
+
     private String sourceCode;
     private int commandCounter;
-    private List<Command> commands;
+    private int memoryPointer;
+    private byte[] memory;
 
     public Program(String sourceCode) {
-        this.sourceCode = sourceCode;
+        this.memoryPointer = 0;
+        this.memory = new byte[30000];
 
-        this.state = new State();
-        this.parser = new Parser();
+        this.sourceCode = sourceCode;
     }
 
     private void execute() {
-        commands = parser.parse(sourceCode);
-        commandCounter = 0;
+        char currentCommand;
 
-        while(commandCounter < commands.size()) {
-            this.state = commands.get(commandCounter).execute(state);
+        for(commandCounter = 0; commandCounter < sourceCode.length(); commandCounter++) {
+            currentCommand = sourceCode.charAt(commandCounter);
+//            System.out.println("Char at " + commandCounter);
 
-            commandCounter += 1;
+            if(currentCommand == PLUS)
+                memory[memoryPointer]++;
+
+            else if (currentCommand == MINUS)
+                memory[memoryPointer]--;
+
+            else  if (currentCommand == RIGHT)
+                memoryPointer += 1;
+
+            else if (currentCommand == LEFT)
+                memoryPointer -= 1;
+
+            else if (currentCommand == '.') {
+                byte currentValue[] = new byte[1];
+                currentValue[0] = memory[memoryPointer];
+
+                System.out.println("Output value: " + new String(currentValue));
+            }
+            else if (currentCommand == ',') {
+                Scanner s = new Scanner(System.in);
+                System.out.print("Input value: ");
+                String input = s.nextLine();
+
+                memory[memoryPointer] = input.getBytes()[0];
+            }
+            else if (currentCommand == '[') {
+                if(memory[memoryPointer] == 0) {
+                    int localOffset = commandCounter;
+                    while(sourceCode.charAt(localOffset) != ']') {
+                        localOffset += 1;
+                    }
+
+                    commandCounter = commandCounter + (localOffset-1);
+                } else {
+                }
+            }
+            else if (currentCommand == ']') {
+                if(memory[memoryPointer] == 0) {
+                }
+                else {
+                    int localOffset = commandCounter;
+                    while(sourceCode.charAt(localOffset) != '[') {
+                        localOffset -= 1;
+                    }
+
+                    commandCounter = commandCounter - (localOffset-1);
+                }
+            }
         }
     }
 
-    private int fetchNextBranchEnd() {
-        for(int i = commandCounter; i < commands.size(); i++) {
-            if(commands.get(i).equals(new BranchEndCommand()))
-                return i;
-        }
 
-        return 0;
-    }
 
     public static void main(String... args) {
-        String sourceCode = "++++";
+        String sourceCode = ",>++[<----->-]<[----------------------.,----------],";
 
         Program aSimpleProgram = new Program(sourceCode);
 
