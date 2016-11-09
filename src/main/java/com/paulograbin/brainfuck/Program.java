@@ -9,6 +9,10 @@ public class Program {
     public static final char LEFT = '<';
     public static final char PLUS = '+';
     public static final char MINUS = '-';
+    public static final char OUTPUT = '.';
+    public static final char INPUT = ',';
+    public static final char BRANCH_START = '[';
+    public static final char BRANCH_END = ']';
 
     private String sourceCode;
     private int commandCounter;
@@ -43,6 +47,7 @@ public class Program {
                 commandCounter++;
             }
             else if (currentCommand == '.') {
+            else if (currentCommand == OUTPUT) {
                 byte currentValue[] = new byte[1];
                 currentValue[0] = memory[memoryPointer];
 
@@ -51,6 +56,7 @@ public class Program {
                 commandCounter++;
             }
             else if (currentCommand == ',') {
+            else if (currentCommand == INPUT) {
                 Scanner s = new Scanner(System.in);
                 System.out.print("Input value: ");
                 String input = s.nextLine();
@@ -58,6 +64,7 @@ public class Program {
                 memory[memoryPointer] = input.getBytes()[0];
             }
             else if (currentCommand == '[') {
+            else if (currentCommand == BRANCH_START) {
                 if(memory[memoryPointer] == 0) {
                     int localOffset = commandCounter;
                     while(sourceCode.charAt(localOffset) != ']') {
@@ -70,6 +77,7 @@ public class Program {
                 }
             }
             else if (currentCommand == ']') {
+            else if (currentCommand == BRANCH_END) {
                 if(memory[memoryPointer] == 0) {
                     commandCounter++;
                 }
