@@ -46,7 +46,6 @@ public class Program {
                 memoryPointer -= 1;
                 commandCounter++;
             }
-            else if (currentCommand == '.') {
             else if (currentCommand == OUTPUT) {
                 byte currentValue[] = new byte[1];
                 currentValue[0] = memory[memoryPointer];
@@ -55,7 +54,6 @@ public class Program {
 
                 commandCounter++;
             }
-            else if (currentCommand == ',') {
             else if (currentCommand == INPUT) {
                 Scanner s = new Scanner(System.in);
                 System.out.print("Input value: ");
@@ -63,7 +61,6 @@ public class Program {
 
                 memory[memoryPointer] = input.getBytes()[0];
             }
-            else if (currentCommand == '[') {
             else if (currentCommand == BRANCH_START) {
                 if(memory[memoryPointer] == 0) {
                     int localOffset = commandCounter;
@@ -76,7 +73,6 @@ public class Program {
                     commandCounter++;
                 }
             }
-            else if (currentCommand == ']') {
             else if (currentCommand == BRANCH_END) {
                 if(memory[memoryPointer] == 0) {
                     commandCounter++;
