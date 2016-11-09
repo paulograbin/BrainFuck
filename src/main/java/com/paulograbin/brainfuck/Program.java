@@ -25,27 +25,30 @@ public class Program {
     private void execute() {
         char currentCommand;
 
-        for(commandCounter = 0; commandCounter < sourceCode.length(); commandCounter++) {
+        while(commandCounter < sourceCode.length()) {
             currentCommand = sourceCode.charAt(commandCounter);
-//            System.out.println("Char at " + commandCounter);
 
-            if(currentCommand == PLUS)
+            if (currentCommand == PLUS) {
                 memory[memoryPointer]++;
-
-            else if (currentCommand == MINUS)
+                commandCounter++;
+            } else if (currentCommand == MINUS) {
                 memory[memoryPointer]--;
-
-            else  if (currentCommand == RIGHT)
+                commandCounter++;
+            } else if (currentCommand == RIGHT) {
                 memoryPointer += 1;
-
-            else if (currentCommand == LEFT)
+                commandCounter++;
+            }
+            else if (currentCommand == LEFT) {
                 memoryPointer -= 1;
-
+                commandCounter++;
+            }
             else if (currentCommand == '.') {
                 byte currentValue[] = new byte[1];
                 currentValue[0] = memory[memoryPointer];
 
                 System.out.println("Output value: " + new String(currentValue));
+
+                commandCounter++;
             }
             else if (currentCommand == ',') {
                 Scanner s = new Scanner(System.in);
@@ -61,12 +64,14 @@ public class Program {
                         localOffset += 1;
                     }
 
-                    commandCounter = commandCounter + (localOffset-1);
+                    commandCounter = commandCounter + (localOffset + 1);
                 } else {
+                    commandCounter++;
                 }
             }
             else if (currentCommand == ']') {
                 if(memory[memoryPointer] == 0) {
+                    commandCounter++;
                 }
                 else {
                     int localOffset = commandCounter;
@@ -74,16 +79,18 @@ public class Program {
                         localOffset -= 1;
                     }
 
-                    commandCounter = commandCounter - (localOffset-1);
+                    commandCounter = localOffset;
                 }
             }
         }
+
+        System.out.println("Over!");
     }
 
 
 
     public static void main(String... args) {
-        String sourceCode = ",>++[<----->-]<[----------------------.,----------],";
+        String sourceCode = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.";
 
         Program aSimpleProgram = new Program(sourceCode);
 
