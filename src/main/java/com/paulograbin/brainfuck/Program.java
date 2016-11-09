@@ -14,16 +14,16 @@ public class Program {
     public static final char BRANCH_START = '[';
     public static final char BRANCH_END = ']';
 
-    private String sourceCode;
+    private final String sourceCode;
+    private final byte[] memory;
     private int commandCounter;
     private int memoryPointer;
-    private byte[] memory;
 
     public Program(String sourceCode) {
-        this.memoryPointer = 0;
-        this.memory = new byte[30000];
-
         this.sourceCode = sourceCode;
+
+        this.memory = new byte[30000];
+        this.memoryPointer = 0;
     }
 
     private void execute() {
@@ -50,7 +50,7 @@ public class Program {
                 byte currentValue[] = new byte[1];
                 currentValue[0] = memory[memoryPointer];
 
-                System.out.println("Output value: " + new String(currentValue));
+                System.out.print(new String(currentValue));
 
                 commandCounter++;
             }
@@ -81,8 +81,6 @@ public class Program {
                 }
             }
         }
-
-        System.out.println("Over!");
     }
 
 
