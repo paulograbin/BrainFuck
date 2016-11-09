@@ -63,12 +63,9 @@ public class Program {
             }
             else if (currentCommand == BRANCH_START) {
                 if(memory[memoryPointer] == 0) {
-                    int localOffset = commandCounter;
-                    while(sourceCode.charAt(localOffset) != ']') {
-                        localOffset += 1;
+                    while(sourceCode.charAt(commandCounter) != ']') {
+                        commandCounter += 1;
                     }
-
-                    commandCounter = commandCounter + (localOffset + 1);
                 } else {
                     commandCounter++;
                 }
@@ -78,12 +75,9 @@ public class Program {
                     commandCounter++;
                 }
                 else {
-                    int localOffset = commandCounter;
-                    while(sourceCode.charAt(localOffset) != '[') {
-                        localOffset -= 1;
+                    while(sourceCode.charAt(commandCounter) != '[') {
+                        commandCounter -= 1;
                     }
-
-                    commandCounter = localOffset;
                 }
             }
         }
