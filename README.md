@@ -23,3 +23,11 @@ With inline code:
 ```bash
 java src/main/java/com/paulograbin/brainfuck/Machine.java -e '++++++[>++++++++++<-]>+++++.'
 ```
+
+## Future Work
+
+- **Nested loops** — The `[` and `]` commands scan linearly for the matching bracket, so nested loops (e.g. `[>[+]]`) will match the wrong bracket. Needs a depth counter or pre-computed jump table.
+- **Input command** — The `,` command does not advance the instruction pointer after reading, causing an infinite loop.
+- **Memory bounds checking** — Moving the pointer past 0 or 29999 will throw an `ArrayIndexOutOfBoundsException`. Should wrap around or grow dynamically.
+- **Bracket validation** — Unmatched `[` or `]` are not detected before execution, leading to runtime errors.
+- **Separate concerns** — Split parsing, memory management, and execution into separate classes using the Command pattern.
