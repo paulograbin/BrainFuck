@@ -94,13 +94,27 @@ public class Machine {
 
 
     public static void main(String... args) {
-        String sourceCode = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.";
+        if (args.length == 0) {
+            System.err.println("Usage: brainfuck <file.bf> or brainfuck -e '<code>'");
+            System.exit(1);
+        }
+
+        String sourceCode;
+        if (args[0].equals("-e") && args.length > 1) {
+            sourceCode = args[1];
+        } else {
+            try {
+                sourceCode = new String(java.nio.file.Files.readAllBytes(java.nio.file.Path.of(args[0])));
+            } catch (java.io.IOException e) {
+                System.err.println("Error reading file: " + e.getMessage());
+                System.exit(1);
+                return;
+            }
+        }
+
         var p = new Program(sourceCode);
-
-        Machine aSimpleProgram = new Machine();
-
-        aSimpleProgram.execute(p);
-
+        var machine = new Machine();
+        machine.execute(p);
         System.out.println(p.getOutput().toString());
     }
 }
