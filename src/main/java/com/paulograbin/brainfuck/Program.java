@@ -11,15 +11,8 @@ public class Program {
     }
 
     public void appendToOutput(byte b) {
+        System.out.println("Appending " + b);
         output.append((char) b);
-    }
-
-    public void appendToOutput(char c) {
-        output.append(c);
-    }
-
-    public void appendToOutput(String s) {
-        output.append(s);
     }
 
     public StringBuilder getOutput() {

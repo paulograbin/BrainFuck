@@ -37,7 +37,7 @@ public class Machine {
 
         String sourceCode = program.getSourceCode();
 
-        while(commandCounter < sourceCode.length()) {
+        while (commandCounter < sourceCode.length()) {
             currentCommand = sourceCode.charAt(commandCounter);
 
             switch (currentCommand) {
@@ -91,8 +91,6 @@ public class Machine {
         }
     }
 
-
-
     public static void main(String... args) {
         if (args.length == 0) {
             System.err.println("Usage: brainfuck <file.bf> or brainfuck -e '<code>'");
@@ -112,9 +110,11 @@ public class Machine {
             }
         }
 
+        System.out.println("Source code: " + sourceCode);
+
         var p = new Program(sourceCode);
         var machine = new Machine();
         machine.execute(p);
-        System.out.println(p.getOutput().toString());
+        System.out.println("Output: " + p.getOutput().toString());
     }
 }
