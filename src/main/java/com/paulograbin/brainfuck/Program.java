@@ -19,10 +19,6 @@ public class Program {
         return output;
     }
 
-    public void setOutput(StringBuilder output) {
-        this.output = output;
-    }
-
     public String getSourceCode() {
         return sourceCode;
     }
